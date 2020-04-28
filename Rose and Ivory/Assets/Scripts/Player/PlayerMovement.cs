@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     SpriteRenderer sprite;
     Animator anim;
     Rigidbody2D body;
+    AudioSource audi;
+    public AudioClip[] footStep;
 
     //Movement Vars
     Vector2 direction;
@@ -18,6 +20,10 @@ public class PlayerMovement : MonoBehaviour
     public float playerVertSpeed;
     float playerVertSpeedHold;
 
+    //Sound Val
+    int randNum;
+    int randNumHold;
+
 
     void Start()
     {
@@ -27,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
+        audi = GetComponent<AudioSource>();
 
         //Value Holds
         playerHorizSpeedHold = playerHorizSpeed;
@@ -43,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
             if(direction.x > 0){
                 sprite.flipX = false;
             }
-            else if (direction.x <= 0)
+            else if (direction.x < 0)
             {
                 sprite.flipX = true;
             }
@@ -52,12 +59,29 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate(){
         if (canMove)
         {
+            //Improved Movement with Interpolation/Speed Smoothing
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
-                body.velocity = new Vector2 (Input.GetAxisRaw("Horizontal") * playerHorizSpeed, Input.GetAxisRaw("Vertical") * playerVertSpeed);
+                body.velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal")* playerHorizSpeed, 0.8f), Mathf.Lerp(0, Input.GetAxis("Vertical")* (playerVertSpeed*.8f), 0.8f));
+                //FootStepSound
+                if(audi.isPlaying == false){
+                    randNumHold = randNum;
+                    randNum = Random.Range(0,footStep.Length);
+                    if(randNum != randNumHold){
+                        audi.PlayOneShot(footStep[randNum]);
+                    }
+                    else{
+                        randNum += 1;
+                        if(randNum == footStep.Length){
+                            randNum = 0;
+                        }
+                        audi.PlayOneShot(footStep[randNum]);
+                    }
+                    
+                }
             }
             else{
-                body.velocity = new Vector2(0f,0f);
+                body.velocity = new Vector2(Mathf.Lerp(body.velocity.x, 0,.2f),Mathf.Lerp(body.velocity.y, 0,.2f));
             }
         }
         else{
