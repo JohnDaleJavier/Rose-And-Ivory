@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GamePreface.unity
     guid: 5dd15a28f637ca94ea40e85ddd3e70aa
+  - enabled: 1
+    path: Assets/Scenes/MiniGameTest.unity
+    guid: 6e0b2d3df16579c43aa24d92882c289b
   m_configObjects: {}

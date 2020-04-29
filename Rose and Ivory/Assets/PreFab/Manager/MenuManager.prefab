@@ -49,4 +49,5 @@ MonoBehaviour:
   - Options
   - Credits
   - TitleScreen
+  - MiniGameTest
   anim: {fileID: 0}
