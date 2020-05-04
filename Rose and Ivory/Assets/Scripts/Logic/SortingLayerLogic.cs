@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SortingLayerLogic : MonoBehaviour
 {
-    void FixedUpdate()
+    public int sortingOrderOffset;
+    void Update()
     {
-        gameObject.GetComponent<Renderer>().sortingOrder = Mathf.RoundToInt(-transform.position.y * 10);
+        gameObject.GetComponent<Renderer>().sortingOrder = (Mathf.RoundToInt(-transform.position.y * 10) + sortingOrderOffset);
     }
 }

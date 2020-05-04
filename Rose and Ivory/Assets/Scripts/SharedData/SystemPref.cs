@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu ( menuName = "SystemPref")]
 public class SystemPref : ScriptableObject
 {
+    public int gameDifficulty;
     public bool introShouldPlay;
     public bool startGame;
     public float masterVol;

@@ -36,10 +36,13 @@ public class MenuManager : MonoBehaviour
     public void ReturnToMenu(){
         sceneNum = 3;
         StartCoroutine(Cutscene());
+        systemPref.startGame = false;
     }
     public void MiniGameTest(){
         sceneNum = 4;
         StartCoroutine(Cutscene());
+        systemPref.introShouldPlay = false;
+        systemPref.startGame = true;
     }
     IEnumerator Cutscene(){
         anim.SetBool("ChangingScene",true);

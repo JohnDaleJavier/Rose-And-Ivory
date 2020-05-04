@@ -5,17 +5,24 @@ using UnityEngine.UI;
 
 public class RelightManager : MonoBehaviour
 {
+    //Components
+    public SystemPref systempPref;
     public GameObject[] lightTarg;
     public GameObject lanternLight;
     public Image Timer;
+    public AudioClip lightClick;    
     AudioSource audi;
-    public AudioClip lightClick;
+
+
+    //values
     public float timerDuration = .5f;
     float timerNum;
+    int currentTarg;
 
+    //bools
     bool randomized = false;
     bool inTarget = false;
-    int currentTarg;
+
     void Start(){
         audi = GetComponent<AudioSource>();
     }
