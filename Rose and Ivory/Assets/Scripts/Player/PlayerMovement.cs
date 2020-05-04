@@ -48,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
             direction.y = Input.GetAxisRaw("Vertical");
             direction.x = Input.GetAxisRaw("Horizontal");
             if(direction.x > 0){
-                sprite.flipX = false;
+                transform.eulerAngles = new Vector3(0,0,0);
             }
             else if (direction.x < 0)
             {
-                sprite.flipX = true;
+                transform.eulerAngles = new Vector3(0,-180,0);
             }
         }
     }
@@ -63,29 +63,30 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
                 body.velocity = new Vector2(Mathf.Lerp(0, Input.GetAxis("Horizontal")* playerHorizSpeed, 0.8f), Mathf.Lerp(0, Input.GetAxis("Vertical")* (playerVertSpeed*.8f), 0.8f));
-                //FootStepSound
-                if(audi.isPlaying == false){
-                    randNumHold = randNum;
-                    randNum = Random.Range(0,footStep.Length);
-                    if(randNum != randNumHold){
-                        audi.PlayOneShot(footStep[randNum]);
-                    }
-                    else{
-                        randNum += 1;
-                        if(randNum == footStep.Length){
-                            randNum = 0;
-                        }
-                        audi.PlayOneShot(footStep[randNum]);
-                    }
-                    
-                }
+                anim.SetBool("isWalking",true);
             }
             else{
                 body.velocity = new Vector2(Mathf.Lerp(body.velocity.x, 0,.2f),Mathf.Lerp(body.velocity.y, 0,.2f));
+                anim.SetBool("isWalking",false);
             }
         }
-        else{
+        else{ 
             body.velocity = new Vector2(0f,0f);
         }
+    }
+    public void PlayStepSound(){
+        randNumHold = randNum;
+        randNum = Random.Range(0,footStep.Length);
+        if(randNum != randNumHold){
+            audi.PlayOneShot(footStep[randNum]);
+        }
+        else{
+            randNum += 1;
+            if(randNum == footStep.Length){
+                randNum = 0;
+            }
+            audi.PlayOneShot(footStep[randNum]);
+        }
+                        
     }
 }
